@@ -1,0 +1,1 @@
+org.bochenlong.general.netty.msg.queue.impl.DefaultMsgQueue#默认消息队列LinkedBlockingQueue
