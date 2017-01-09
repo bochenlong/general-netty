@@ -27,9 +27,8 @@ public class ServerBizHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        logger.warn("{} exception {}", ctx, cause);
+        logger.error("{} exception {}", ctx, cause);
         cause.printStackTrace();
-        ctx.close();
     }
 
 }

@@ -1,12 +1,14 @@
 package org.bochenlong.general.netty.msg.queue;
 
+import org.bochenlong.general.netty.msg.bean.NettyMsg;
+
 /**
  * Created by bochenlong on 16-12-28.
  */
-public interface IMsgQueue<Short, NettyMessage> {
-    void createQueue(Short t);
+public interface IMsgQueue {
+    void create(short t);
     
-    boolean add(Short t, NettyMessage message);
+    boolean add(short t, NettyMsg msg);
     
-    NettyMessage take(Short t);
+    NettyMsg take(short t);
 }

@@ -19,10 +19,10 @@ public class SpiUtil {
         loaderMap.getOrDefault(clazz, loadService(clazz)).reload();
     }
     
-    public static <T> Optional<T> getServiceImpl(Class<T> clazz) {
+    public static <T> T getServiceImpl(Class<T> clazz) {
         for (T service : loadService(clazz)) {
-            return Optional.of(service);
+            return service;
         }
-        return Optional.empty();
+        return null;
     }
 }

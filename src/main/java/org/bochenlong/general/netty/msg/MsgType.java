@@ -3,12 +3,11 @@ package org.bochenlong.general.netty.msg;
 /**
  * Created by bochenlong on 16-12-22.
  * <p>
- * MsgType 0-99 为系统保留 // 100 - Short.MAX_VALUE 为业务可取类型
+ * 系统消息类型，取值范围为0 - 99
  */
 public enum MsgType {
     HEART((short) 0),
-    AUTH((short) 1),
-    BUSINESS((short) 100);
+    AUTH((short) 1),;
     
     private short type;
     

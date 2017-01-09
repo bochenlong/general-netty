@@ -1,9 +1,7 @@
 package org.bochenlong.general.netty.msg;
 
-import org.bochenlong.general.netty.msg.bean.NettyMsg;
-import org.bochenlong.general.netty.msg.queue.DefaultQueueOption;
-import org.bochenlong.general.netty.msg.queue.UserDefineOption;
 import org.bochenlong.general.netty.msg.queue.IMsgQueue;
+import org.bochenlong.general.netty.util.SpiUtil;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -16,7 +14,7 @@ public class MsgHelper {
     
     public static boolean addMsgType(short type) {
         assert type >= 100;
-        getMsgQueue().createQueue(type);
+        getMsgQueue().create(type);
         return set.add(type);
     }
     
@@ -25,22 +23,7 @@ public class MsgHelper {
         return true;
     }
     
-    public static boolean add(short type, NettyMsg message) {
-        return getMsgQueue().add(type, message);
-    }
-    
-    
-    public static void take(short type, NettyMsg message) {
-        getMsgQueue().take(type);
-    }
-    
-    
-    private static IMsgQueue<Short, NettyMsg> getMsgQueue() {
-        if (MsgManager.getMsgQueueType() == MsgManager.MsgQueueType.DEFAULT) {
-            return DefaultQueueOption.me().getIMsgQueue();
-        } else if (MsgManager.getMsgQueueType() == MsgManager.MsgQueueType.USER_DEFINE) {
-            return UserDefineOption.me().getIMsgQueue();
-        }
-        return null;
+    public static IMsgQueue getMsgQueue() {
+        return SpiUtil.getServiceImpl(IMsgQueue.class);
     }
 }

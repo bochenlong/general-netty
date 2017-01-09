@@ -13,7 +13,7 @@ import org.bochenlong.general.netty.msg.bean.NettyMsg;
 import org.bochenlong.general.netty.resp.NettyFuture;
 import org.bochenlong.general.netty.resp.RequestProp;
 import org.bochenlong.general.netty.server.NettyServer;
-import org.bochenlong.general.netty.server.authpolicy.AuthManager;
+import org.bochenlong.general.netty.server.auth.AuthManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

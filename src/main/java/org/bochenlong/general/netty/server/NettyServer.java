@@ -54,17 +54,17 @@ public class NettyServer {
             
             // 绑定端口，等待启动成功
             ChannelFuture future = bootstrap.bind(NettyManager.DEFAULT_HOST, port).sync();
-            logger.info("P2pServer start ok : {} - {}", NettyManager.DEFAULT_HOST, port);
+            logger.info("NettyServer start ok : {} - {}", NettyManager.DEFAULT_HOST, port);
             // 监听关闭事件
             future.channel().closeFuture().addListener(a -> {
                 if (a.isDone()) {
-                    logger.info("P2pServer stop : {} - {}", NettyManager.DEFAULT_HOST, port);
+                    logger.info("NettyServer stop : {} - {}", NettyManager.DEFAULT_HOST, port);
                     // 关闭资源
                     this.stop();
                 }
             });
         } catch (Exception e) {
-            logger.error("P2pServer start exception : {} - {} / {}", e.getMessage());
+            logger.error("NettyServer start exception : {} - {} / {}", e.getMessage());
             e.printStackTrace();
             // 关闭资源
             this.stop();
@@ -82,7 +82,7 @@ public class NettyServer {
     protected void stop() {
         workGroup.shutdownGracefully();
         bossGroup.shutdownGracefully();
-        logger.error("P2pServer stop over");
+        logger.error("NettyServer stop over");
     }
     
 }
