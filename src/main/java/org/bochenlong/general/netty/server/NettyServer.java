@@ -45,7 +45,8 @@ public class NettyServer {
                                     new MsgDecoder(
                                             NettyManager.MSG_MAX_LEN,
                                             NettyManager.MSG_LEN_OFFSET,
-                                            NettyManager.MSG_LEN_FIELD));
+                                            NettyManager.MSG_LEN_FIELD,
+                                            NettyManager.MSG_LEN_ADJUSTMENT));
                             ch.pipeline().addLast(new MsgEncoder());
                             ch.pipeline().addLast(new ServerAuthInHandler());
                             ch.pipeline().addLast(new ServerBizHandler());
@@ -64,7 +65,7 @@ public class NettyServer {
                 }
             });
         } catch (Exception e) {
-            logger.error("NettyServer start exception : {} - {} / {}", e.getMessage());
+            logger.error("NettyServer start exception : {} - {} / {}", NettyManager.DEFAULT_HOST, port, e.getMessage());
             e.printStackTrace();
             // 关闭资源
             this.stop();

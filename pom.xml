@@ -14,12 +14,14 @@
         <jdk.version>1.8</jdk.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <!-- org.bochenlong.netty.codec -->
+        <!-- codec -->
         <protostuff.version>1.5.2</protostuff.version>
         <!-- netty nio -->
         <netty.version>4.1.6.Final</netty.version>
         <!-- logger -->
         <slf4j-api.version>1.7.22</slf4j-api.version>
+        <!-- test -->
+        <slf4j-jdk14.version>1.7.22</slf4j-jdk14.version>
     </properties>
 
     <dependencies>
@@ -43,10 +45,25 @@
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j-api.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-jdk14</artifactId>
+            <version>${slf4j-jdk14.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
         <finalName>general-netty</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.*</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
+        </resources>
         <plugins>
         </plugins>
     </build>

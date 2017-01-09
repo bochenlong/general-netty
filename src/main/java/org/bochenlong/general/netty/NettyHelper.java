@@ -8,12 +8,10 @@ import org.bochenlong.general.netty.common.CommonHeaderKey;
 import org.bochenlong.general.netty.common.exception.RemoteException;
 import org.bochenlong.general.netty.func.CallBack;
 import org.bochenlong.general.netty.msg.MsgHelper;
-import org.bochenlong.general.netty.msg.MsgManager;
 import org.bochenlong.general.netty.msg.bean.NettyMsg;
 import org.bochenlong.general.netty.resp.NettyFuture;
 import org.bochenlong.general.netty.resp.RequestProp;
 import org.bochenlong.general.netty.server.NettyServer;
-import org.bochenlong.general.netty.server.auth.AuthManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -66,7 +64,7 @@ public class NettyHelper {
         return localIP;
     }
     
-    public static void sendBack(String host,NettyMsg msg) {
+    public static void sendBack(String host, NettyMsg msg) {
         msg.getHeader().setRequestProp(RequestProp.RESPONSE.getProp());
         connect(host).writeAndFlush(msg);
     }
@@ -108,7 +106,7 @@ public class NettyHelper {
     }
     
     public static void deliveryMsg(ChannelHandlerContext ctx, NettyMsg msg) {
-        logger.info("receive org.bochenlong.netty.msg {}", msg);
+        logger.info("receive msg {}", msg);
         // 如果resp，则writeResp
         if (msg.getHeader().getRequestProp() == RequestProp.RESPONSE.getProp()) {
             writeResp(msg);
@@ -121,11 +119,6 @@ public class NettyHelper {
     }
     
     public static void startServer() {
-        /*授权方式*/
-        AuthManager.setSINGLE_CON();
-        /*消息队列*/
-        MsgManager.setDefault();
-        /*服务器启动*/
         new NettyServer().start();
     }
     

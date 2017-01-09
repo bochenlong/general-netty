@@ -45,7 +45,8 @@ public class NettyClient {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
                             ch.pipeline().addLast(new MsgDecoder(NettyManager.MSG_MAX_LEN
-                                    , NettyManager.MSG_LEN_OFFSET, NettyManager.MSG_LEN_FIELD));
+                                    , NettyManager.MSG_LEN_OFFSET, NettyManager.MSG_LEN_FIELD
+                                    , NettyManager.MSG_LEN_ADJUSTMENT));
                             ch.pipeline().addLast(new MsgEncoder());
                             ch.pipeline().addLast(new ClientInHandler());
                         }
