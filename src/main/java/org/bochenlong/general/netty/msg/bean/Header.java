@@ -92,7 +92,7 @@ public class Header {
                 ", type=" + type +
                 ", requestProp=" + requestProp +
                 ", priority=" + priority +
-                ", systemic=" + systemic +
+                ", remote=" + getRemote() +
                 ", customized=" + customized +
                 '}';
     }

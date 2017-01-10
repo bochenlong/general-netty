@@ -55,8 +55,6 @@ public class NettyClient {
             ChannelFuture future = bootstrap.connect(host, port).sync();
             this.channel = future.channel();
             
-            NettyChannel.addChannel(host, channel);
-            
             logger.info("NettyClient connect ok {} - {}", host, port);
             this.channel.closeFuture().addListener(a -> {
                 logger.info("NettyClient connect close {} - {}", host, port);

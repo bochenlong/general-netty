@@ -1,13 +1,14 @@
 package org.bochenlong.general.netty.common;
 
 import java.io.IOException;
+import java.nio.file.NoSuchFileException;
 import java.util.Properties;
 
 /**
  * Created by bochenlong on 16-11-15.
  */
 public final class Constant {
-    private static Properties properties = init();
+    public static Properties properties = init();
     
     private static Properties init() {
         try {
@@ -15,7 +16,7 @@ public final class Constant {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        throw new NoSuchFieldError("netty.properties not exist");
+        throw new RuntimeException("netty.properties not exist");
     }
     
     

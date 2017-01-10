@@ -4,7 +4,6 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
 import org.bochenlong.general.netty.client.NettyClient;
-import org.bochenlong.general.netty.common.CommonHeaderKey;
 import org.bochenlong.general.netty.common.exception.RemoteException;
 import org.bochenlong.general.netty.func.CallBack;
 import org.bochenlong.general.netty.msg.MsgHelper;
@@ -113,7 +112,7 @@ public class NettyHelper {
             return;
         }
         // 否则传递到队列消费
-        msg.getHeader().getCustomized().put(CommonHeaderKey.FR_HOST, getIp(ctx.channel().remoteAddress()));
+        msg.getHeader().setRemote(getIp(ctx.channel().remoteAddress()));
         MsgHelper.add(msg.getHeader().getType(), msg);
         
     }
@@ -127,47 +126,50 @@ public class NettyHelper {
         if (channel != null) channel.close();
     }
     
+    public static void close(String host, CallBack callBack) {
+        close(host);
+        callBack.call();
+    }
+    
     public static boolean removeChannel(ChannelHandlerContext ctx) {
         return NettyChannel.channels.remove(getIp(ctx.channel().remoteAddress()), ctx.channel());
     }
     
     public static void closeAndRecon(String host) {
         logger.info("closeAndRecon {}", host);
-        close(host, Long.MAX_VALUE, NettyManager.RETRY_TIME, TimeUnit.MILLISECONDS);
+        closeAndRecon(host, Long.MAX_VALUE, NettyManager.RETRY_TIME, TimeUnit.MILLISECONDS);
     }
     
-    public static void close(String host, long retry, long interval, TimeUnit unit) {
+    public static void closeAndRecon(String host, long retry, long interval, TimeUnit unit) {
         long t = System.currentTimeMillis();
         long finalRetry = unit.toMillis(retry);
         close(host, () -> {
-//            int i = 0;
-//            while (System.currentTimeMillis() - t <= finalRetry) {
-//                logger.info("P2pUtil org.bochenlong.netty.client reconnect at ", Integer.valueOf(++i));
-//                Channel channel = null;
-//
-//                try {
-//                    channel = connect(host);
-//                } catch (Exception var11) {
-//                    logger.error(var11.getMessage());
-//                }
-//
-//                if (channel != null) {
-//                    logger.info("P2pUtil org.bochenlong.netty.client reconnect ok send org.bochenlong.netty.msg to {} ", host);
-//                    break;
-//                }
-//
-//                try {
-//                    Thread.sleep(interval);
-//                } catch (InterruptedException var10) {
-//                    logger.error(var10.getMessage());
-//                }
-//            }
-            
+            int i = 0;
+            while (System.currentTimeMillis() - t <= finalRetry) {
+                logger.info("reconnect at {}", i++);
+                Channel channel = null;
+                
+                try {
+                    channel = connect(host);
+                } catch (Exception e) {
+                    logger.error(e.getMessage());
+                }
+                
+                if (channel != null) {
+                    NettyChannel.channels.put(host, channel);
+                    logger.info("client reconnect ok");
+                    break;
+                }
+                
+                try {
+                    Thread.sleep(interval);
+                } catch (InterruptedException e) {
+                    logger.error(e.getMessage());
+                }
+            }
+            logger.info("client reconnect fail");
         });
     }
     
-    public static void close(String host, CallBack callBack) {
-        close(host);
-        callBack.call();
-    }
+    
 }

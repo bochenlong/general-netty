@@ -18,9 +18,4 @@ public class NettyChannel {
     public static ConcurrentHashMap<Long, NettyFuture<NettyMsg>> futures
             = new ConcurrentHashMap<>();
     
-    public static void addChannel(String host, Channel channel) {
-        if (channels.put(host, channel) != null) {
-            channel.close();
-        }
-    }
 }

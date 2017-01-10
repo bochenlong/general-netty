@@ -3,6 +3,7 @@ package org.bochenlong.general.netty.server.handler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.ReferenceCountUtil;
+import org.bochenlong.general.netty.NettyHelper;
 import org.bochenlong.general.netty.msg.MsgType;
 import org.bochenlong.general.netty.msg.bean.NettyMsg;
 import org.bochenlong.general.netty.server.auth.AuthHelper;
@@ -48,5 +49,7 @@ public class ServerAuthInHandler extends ChannelInboundHandlerAdapter {
         logger.debug("inactive {}", ctx);
         AuthHelper.remove(ctx);
         logger.info("Server auth remove {}", ctx);
+        NettyHelper.removeChannel(ctx);
+        logger.info("Server channel remove {}", ctx);
     }
 }

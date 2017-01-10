@@ -18,7 +18,7 @@ public class  NettyManager {
     
     public static int SEND_TIME_OUT = 1000 * 15;
     
-    public static int RETRY_TIME = '\uea60';
+    public static int RETRY_TIME = 1000 * 60;
     
     public static void setDefaultHost(String defaultHost) {
         DEFAULT_HOST = defaultHost;

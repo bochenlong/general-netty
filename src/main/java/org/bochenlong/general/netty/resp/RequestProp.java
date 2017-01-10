@@ -10,7 +10,7 @@ public enum RequestProp {
     
     private byte prop;
     
-    private RequestProp(byte prop) {
+    RequestProp(byte prop) {
         this.prop = prop;
     }
     
