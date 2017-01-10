@@ -102,8 +102,7 @@ public class NettyHelper {
     
     
     public static Channel connect(String host) {
-        Channel channel = new NettyClient(host).channel();
-        return NettyChannel.channels.computeIfAbsent(host, a -> channel);
+        return NettyChannel.channels.computeIfAbsent(host, a -> new NettyClient(host).channel());
     }
     
     public static void deliveryMsg(ChannelHandlerContext ctx, NettyMsg msg) {

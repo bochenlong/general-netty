@@ -19,17 +19,13 @@ public class ServerAuthInHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         logger.debug("read {}", ctx);
-        NettyMsg message = (NettyMsg) msg;
-        if (message.getHeader().getType() == MsgType.AUTH.getType()) {
-            if (AuthHelper.auth(ctx)) {
-                logger.info("Server auth success {}", ctx);
-            } else {
-                ctx.close();
-                logger.info("Server auth fail {}", ctx);
-            }
-            ReferenceCountUtil.release(msg);
-        } else {
+        if (AuthHelper.auth(ctx)) {
+            logger.info("Server auth success {}", NettyHelper.getIp(ctx.channel().remoteAddress()));
             ctx.fireChannelRead(msg);
+        } else {
+            logger.info("Server auth fail {}", NettyHelper.getIp(ctx.channel().remoteAddress()));
+            ReferenceCountUtil.release(msg);
+            ctx.close();
         }
     }
     
@@ -40,7 +36,7 @@ public class ServerAuthInHandler extends ChannelInboundHandlerAdapter {
     
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        logger.error("{} exception {}", ctx, cause);
+        logger.error("{} exception {}", ctx, cause.getMessage());
         cause.printStackTrace();
     }
     

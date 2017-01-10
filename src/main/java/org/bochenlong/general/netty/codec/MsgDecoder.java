@@ -3,6 +3,7 @@ package org.bochenlong.general.netty.codec;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+import io.netty.util.ReferenceCountUtil;
 import org.bochenlong.general.netty.msg.bean.NettyMsg;
 
 /**
@@ -26,8 +27,14 @@ public class MsgDecoder extends LengthFieldBasedFrameDecoder {
             return null;
         }
         
-        NettyMsg msg = MsgCodecUtil.decode(frame);
-        return msg;
+        int length = frame.readInt();
+        int remainLength = frame.readableBytes();
+        byte[] bytes = new byte[remainLength];
+        frame.readBytes(bytes);
+        NettyMsg msg = MsgCodec.toObject(bytes, NettyMsg.class);
+        msg.getHeader().setLength(length);
         
+        frame.release();
+        return msg;
     }
 }

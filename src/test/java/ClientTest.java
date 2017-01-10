@@ -12,7 +12,18 @@ import java.util.concurrent.Future;
  */
 public class ClientTest {
     public static void main(String[] args) throws Exception {
-        System.out.println(Short.MAX_VALUE);
+        for (int i = 0; i < 100; i++) {
+            new Thread(() -> {
+                for (; ; ) {
+                    try {
+                        Thread.sleep(50L);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    sendAsync();
+                }
+            }).start();
+        }
         sendAsync();
 //        sendSync();
     }

@@ -30,7 +30,7 @@ public class NettyManager {
     private static int MSG_MAX_LEN = 1024 * 1024;
     private static int MSG_LEN_OFFSET = 0;
     private static int MSG_LEN_FIELD = 4;
-    private static int MSG_LEN_ADJUSTMENT = -5;
+    private static int MSG_LEN_ADJUSTMENT = -4;
     
     private static int BACKLOG_SIZE = 1204;
     
