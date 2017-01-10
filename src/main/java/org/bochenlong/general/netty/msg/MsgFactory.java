@@ -1,7 +1,6 @@
 package org.bochenlong.general.netty.msg;
 
 
-import org.bochenlong.general.netty.BizMsgType;
 import org.bochenlong.general.netty.msg.bean.Header;
 import org.bochenlong.general.netty.msg.bean.NettyMsg;
 
@@ -15,39 +14,39 @@ public class MsgFactory {
         return new NettyMsg(header, o);
     }
     
-    public static NettyMsg newMsg(BizMsgType type, Object o) {
+    public static NettyMsg newMsg(byte bizMsgType, Object o) {
         Header header = new Header();
-        header.setType(type.getType());
+        header.setType(bizMsgType);
         return newMsg(header, o);
     }
     
-    public static NettyMsg newMsg(BizMsgType type, Map<String, Object> customized, Object o) {
-        NettyMsg msg = newMsg(type, o);
+    public static NettyMsg newMsg(byte bizMsgType, Map<String, Object> customized, Object o) {
+        NettyMsg msg = newMsg(bizMsgType, o);
         msg.getHeader().getCustomized().putAll(customized);
         return msg;
     }
     
-    public static NettyMsg newMsg(BizMsgType type, byte priority, Map<String, Object> customized, Object o) {
-        NettyMsg msg = newMsg(type, customized, o);
+    public static NettyMsg newMsg(byte bizMsgType, byte priority, Map<String, Object> customized, Object o) {
+        NettyMsg msg = newMsg(bizMsgType, customized, o);
         msg.getHeader().setPriority(priority);
         return msg;
     }
     
-    public static NettyMsg newMsgHeader(BizMsgType type) {
+    public static NettyMsg newMsgHeader(byte bizMsgType) {
         Header header = new Header();
-        header.setType(type.getType());
+        header.setType(bizMsgType);
         NettyMsg msg = new NettyMsg(header);
         return msg;
     }
     
-    public static NettyMsg newMsgHeader(BizMsgType type, Map<String, Object> customized) {
-        NettyMsg msg = newMsgHeader(type);
+    public static NettyMsg newMsgHeader(byte bizMsgType, Map<String, Object> customized) {
+        NettyMsg msg = newMsgHeader(bizMsgType);
         msg.getHeader().getCustomized().putAll(customized);
         return msg;
     }
     
-    public static NettyMsg newMsgHeader(BizMsgType type, byte priority, Map<String, Object> customized) {
-        NettyMsg msg = newMsgHeader(type, customized);
+    public static NettyMsg newMsgHeader(byte bizMsgType, byte priority, Map<String, Object> customized) {
+        NettyMsg msg = newMsgHeader(bizMsgType, customized);
         msg.getHeader().setPriority(priority);
         return msg;
     }
