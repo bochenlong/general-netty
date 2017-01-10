@@ -11,8 +11,9 @@ public class MsgHelper {
     private static IMsgQueue msgQueue = SpiUtil.getServiceImpl(IMsgQueue.class);
     
     public static void addMsgType(short type) {
-        assert type >= 100 && type <= Short.MAX_VALUE;
-        create(type);
+        if (isBizType(type))
+            create(type);
+        throw new RuntimeException("biz_msg_type should be in [1,32767]");
     }
     
     public static void create(short t) {
@@ -25,5 +26,9 @@ public class MsgHelper {
     
     public static NettyMsg take(short t) {
         return msgQueue.take(t);
+    }
+    
+    public static boolean isBizType(short type) {
+        return type > 0 && type <= Short.MAX_VALUE;
     }
 }

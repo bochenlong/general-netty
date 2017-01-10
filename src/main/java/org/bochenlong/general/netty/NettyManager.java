@@ -1,15 +1,11 @@
 package org.bochenlong.general.netty;
 
-import org.bochenlong.general.netty.msg.MsgHelper;
-import org.bochenlong.general.netty.msg.bean.NettyMsg;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * Created by bochenlong on 16-10-24.
@@ -150,7 +146,5 @@ public class NettyManager {
     
     public void setBIZ_MSG_TYPE(List<Map<String, Integer>> BIZ_MSG_TYPE) {
         this.BIZ_MSG_TYPE = BIZ_MSG_TYPE;
-        this.BIZ_MSG_TYPE.stream().map(a -> a.values()).flatMap(Collection::stream)
-                .map(a -> a.shortValue()).forEach(MsgHelper::addMsgType);
     }
 }

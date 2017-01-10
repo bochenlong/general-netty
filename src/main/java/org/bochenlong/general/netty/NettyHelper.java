@@ -120,6 +120,9 @@ public class NettyHelper {
     }
     
     public static void startServer() {
+        NettyManager.me().getBIZ_MSG_TYPE().stream()
+                .map(a -> a.values()).flatMap(Collection::stream)
+                .map(Integer::shortValue).forEach(MsgHelper::addMsgType);
         new NettyServer().start();
     }
     
