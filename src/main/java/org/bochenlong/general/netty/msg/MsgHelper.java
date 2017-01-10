@@ -11,9 +11,9 @@ public class MsgHelper {
     private static IMsgQueue msgQueue = SpiUtil.getServiceImpl(IMsgQueue.class);
     
     public static void addMsgType(short type) {
-        if (isBizType(type))
-            create(type);
-        throw new RuntimeException("biz_msg_type should be in [1,32767]");
+        if (!isBizType(type))
+            throw new RuntimeException("biz_msg_type should be in [1,32767]");
+        create(type);
     }
     
     public static void create(short t) {
