@@ -6,8 +6,9 @@ package org.bochenlong.general.netty.msg;
  * 系统消息类型，取值范围为0 - 99
  */
 public enum MsgType {
-    HEART((short) 0),
-    AUTH((short) 1),;
+    UNKNOWN((short) 0),
+    HEART((short) 1),
+    AUTH((short) 2),;
     
     private short type;
     

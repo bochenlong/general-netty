@@ -1,0 +1,18 @@
+# --------------
+# 网络参数
+DEFAULT_PORT: 8989
+MSG_MAX_LEN: 1048576
+BACKLOG_SIZE: 1024
+CONNECT_TIME_OUT: 30000
+SEND_TIME_OUT: 15000
+RETRY_TIME: 60000
+# --------------
+# 全局Id
+DATA_CENTER_ID: 199
+WORK_ID: 288
+# --------------
+# 业务消息类型
+BIZ_MSG_TYPE:
+  - HEART: 100
+  - SYNC: 200
+  - CACHE: 300

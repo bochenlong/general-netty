@@ -1,5 +1,6 @@
 package org.bochenlong.general.netty.idgenerator;
 
+import org.bochenlong.general.netty.NettyManager;
 import org.bochenlong.general.netty.common.Constant;
 
 import java.util.function.LongSupplier;
@@ -10,7 +11,7 @@ import java.util.function.LongUnaryOperator;
  */
 public class IdWorker {
     private static class Holder {
-        private static IdWorker idWorker = new IdWorker(Constant.dataCenterId, Constant.workerId);
+        private static IdWorker idWorker = new IdWorker(NettyManager.me().getDATA_CENTER_ID(), NettyManager.me().getWORK_ID());
     }
     
     public static IdWorker instance() {

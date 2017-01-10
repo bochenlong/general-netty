@@ -20,13 +20,13 @@ public class ClientTest {
     public static void sendAsync() {
         NettyMsg msg = MsgFactory.newMsgHeader(BizMsgType.AMOUNT);
         msg.setBody("hello , this is ip 9");
-        NettyHelper.sendAsync(NettyManager.DEFAULT_HOST, msg);
+        NettyHelper.sendAsync(NettyManager.me().getDEFAULT_HOST(), msg);
     }
     
     public static void sendSync() throws RemoteException, ExecutionException, InterruptedException {
         NettyMsg msg = MsgFactory.newMsgHeader(BizMsgType.AMOUNT);
         msg.setBody("hello , this is ip 9");
-        Future<NettyMsg> nettyMsgFuture = NettyHelper.sendSync(NettyManager.DEFAULT_HOST, msg);
+        Future<NettyMsg> nettyMsgFuture = NettyHelper.sendSync(NettyManager.me().getDEFAULT_HOST(), msg);
         System.out.println(nettyMsgFuture.get());
     }
 }

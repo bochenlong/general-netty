@@ -18,12 +18,6 @@ public class MsgHelper {
         create(type);
     }
     
-    public static boolean addMsgTypes(Set<Short> types) {
-        types.stream().forEach(MsgHelper::addMsgType);
-        return true;
-    }
-    
-    
     public static void create(short t) {
         msgQueue.create(t);
     }

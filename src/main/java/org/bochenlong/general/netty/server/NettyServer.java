@@ -34,7 +34,7 @@ public class NettyServer {
             bootstrap.group(bossGroup, workGroup)
                     .channel(NioServerSocketChannel.class)
                     // for bossGroup
-                    .option(ChannelOption.SO_BACKLOG, NettyManager.BACKLOG_SIZE)
+                    .option(ChannelOption.SO_BACKLOG, NettyManager.me().getBACKLOG_SIZE())
                     .option(ChannelOption.SO_KEEPALIVE, true)// 保活
                     // for workGroup
                     .childOption(ChannelOption.TCP_NODELAY, false)// 有数据就发，默认false
@@ -43,10 +43,10 @@ public class NettyServer {
                         public void initChannel(SocketChannel ch) throws Exception {
                             ch.pipeline().addLast(
                                     new MsgDecoder(
-                                            NettyManager.MSG_MAX_LEN,
-                                            NettyManager.MSG_LEN_OFFSET,
-                                            NettyManager.MSG_LEN_FIELD,
-                                            NettyManager.MSG_LEN_ADJUSTMENT));
+                                            NettyManager.me().getMSG_MAX_LEN(),
+                                            NettyManager.me().getMSG_LEN_OFFSET(),
+                                            NettyManager.me().getMSG_LEN_FIELD(),
+                                            NettyManager.me().getMSG_LEN_ADJUSTMENT()));
                             ch.pipeline().addLast(new MsgEncoder());
                             ch.pipeline().addLast(new ServerAuthInHandler());
                             ch.pipeline().addLast(new ServerBizHandler());
@@ -54,18 +54,18 @@ public class NettyServer {
                     });
             
             // 绑定端口，等待启动成功
-            ChannelFuture future = bootstrap.bind(NettyManager.DEFAULT_HOST, port).sync();
-            logger.info("NettyServer start ok : {} - {}", NettyManager.DEFAULT_HOST, port);
+            ChannelFuture future = bootstrap.bind(NettyManager.me().getDEFAULT_HOST(), port).sync();
+            logger.info("NettyServer start ok : {} - {}", NettyManager.me().getDEFAULT_HOST(), port);
             // 监听关闭事件
             future.channel().closeFuture().addListener(a -> {
                 if (a.isDone()) {
-                    logger.info("NettyServer stop : {} - {}", NettyManager.DEFAULT_HOST, port);
+                    logger.info("NettyServer stop : {} - {}", NettyManager.me().getDEFAULT_HOST(), port);
                     // 关闭资源
                     this.stop();
                 }
             });
         } catch (Exception e) {
-            logger.error("NettyServer start exception : {} - {} / {}", NettyManager.DEFAULT_HOST, port, e.getMessage());
+            logger.error("NettyServer start exception : {} - {} / {}", NettyManager.me().getDEFAULT_HOST(), port, e.getMessage());
             e.printStackTrace();
             // 关闭资源
             this.stop();
@@ -77,7 +77,7 @@ public class NettyServer {
     }
     
     public void start() {
-        start(NettyManager.DEFAULT_PORT);
+        start(NettyManager.me().getDEFAULT_PORT());
     }
     
     protected void stop() {

@@ -22,7 +22,7 @@ public class NettyClient {
     private volatile Channel channel;
     
     public NettyClient(String host) {
-        connect(host, NettyManager.DEFAULT_PORT);
+        connect(host, NettyManager.me().getDEFAULT_PORT());
     }
     
     public NettyClient(String host, int port) {
@@ -40,13 +40,13 @@ public class NettyClient {
                     .channel(NioSocketChannel.class)
                     .option(ChannelOption.SO_KEEPALIVE, true)// 保活
                     .option(ChannelOption.TCP_NODELAY, false)// 有数据就发
-                    .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, NettyManager.CONNECT_TIME_OUT) // 连接超时时间
+                    .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, NettyManager.me().getCONNECT_TIME_OUT()) // 连接超时时间
                     .handler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
-                            ch.pipeline().addLast(new MsgDecoder(NettyManager.MSG_MAX_LEN
-                                    , NettyManager.MSG_LEN_OFFSET, NettyManager.MSG_LEN_FIELD
-                                    , NettyManager.MSG_LEN_ADJUSTMENT));
+                            ch.pipeline().addLast(new MsgDecoder(NettyManager.me().getMSG_MAX_LEN()
+                                    , NettyManager.me().getMSG_LEN_OFFSET(), NettyManager.me().getMSG_LEN_FIELD()
+                                    , NettyManager.me().getMSG_LEN_ADJUSTMENT()));
                             ch.pipeline().addLast(new MsgEncoder());
                             ch.pipeline().addLast(new ClientInHandler());
                         }

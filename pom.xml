@@ -20,6 +20,8 @@
         <netty.version>4.1.6.Final</netty.version>
         <!-- logger -->
         <slf4j-api.version>1.7.22</slf4j-api.version>
+        <!-- yaml -->
+        <snakeyaml.version>1.17</snakeyaml.version>
         <!-- test -->
         <slf4j-jdk14.version>1.7.22</slf4j-jdk14.version>
     </properties>
@@ -44,6 +46,11 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>${snakeyaml.version}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>

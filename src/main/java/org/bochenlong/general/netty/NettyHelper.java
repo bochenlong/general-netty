@@ -18,6 +18,7 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketAddress;
 import java.net.SocketException;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
@@ -78,7 +79,7 @@ public class NettyHelper {
         Channel channel = connect(host);
         try {
             ChannelFuture future = channel.writeAndFlush(msg);
-            future.await(NettyManager.SEND_TIME_OUT);
+            future.await(NettyManager.me().getSEND_TIME_OUT());
             Throwable cause = future.cause();
             if (cause != null) {
                 throw cause;
@@ -137,7 +138,7 @@ public class NettyHelper {
     
     public static void closeAndRecon(String host) {
         logger.info("closeAndRecon {}", host);
-        closeAndRecon(host, Long.MAX_VALUE, NettyManager.RETRY_TIME, TimeUnit.MILLISECONDS);
+        closeAndRecon(host, Long.MAX_VALUE, NettyManager.me().getRETRY_TIME(), TimeUnit.MILLISECONDS);
     }
     
     public static void closeAndRecon(String host, long retry, long interval, TimeUnit unit) {
