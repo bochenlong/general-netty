@@ -12,6 +12,7 @@ DATA_CENTER_ID: 199
 WORK_ID: 288
 # --------------
 # 业务消息类型
+# 取值范围[100 - 32767]
 BIZ_MSG_TYPE:
   - HEART: 100
   - SYNC: 200

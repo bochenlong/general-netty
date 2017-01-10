@@ -1,11 +1,15 @@
 package org.bochenlong.general.netty;
 
+import org.bochenlong.general.netty.msg.MsgHelper;
+import org.bochenlong.general.netty.msg.bean.NettyMsg;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by bochenlong on 16-10-24.
@@ -24,7 +28,6 @@ public class NettyManager {
         return Holder.manager;
     }
     
-    
     private static String DEFAULT_HOST = NettyHelper.getLocalIP();
     private static int DEFAULT_PORT = 8989;
     
@@ -42,7 +45,7 @@ public class NettyManager {
     private static long DATA_CENTER_ID = 1L;
     private static long WORK_ID = 1L;
     
-    private static List<Map<String, Short>> BIZ_MSG_TYPE = new ArrayList<>();
+    private static List<Map<String, Integer>> BIZ_MSG_TYPE = new ArrayList<>();
     
     
     public String getDEFAULT_HOST() {
@@ -141,15 +144,13 @@ public class NettyManager {
         this.WORK_ID = WORK_ID;
     }
     
-    public List<Map<String, Short>> getBIZ_MSG_TYPE() {
+    public List<Map<String, Integer>> getBIZ_MSG_TYPE() {
         return BIZ_MSG_TYPE;
     }
     
-    public void setBIZ_MSG_TYPE(List<Map<String, Short>> BIZ_MSG_TYPE) {
+    public void setBIZ_MSG_TYPE(List<Map<String, Integer>> BIZ_MSG_TYPE) {
         this.BIZ_MSG_TYPE = BIZ_MSG_TYPE;
-    }
-    
-    public static void main(String[] args) {
-        System.out.println(NettyManager.WORK_ID);
+        this.BIZ_MSG_TYPE.stream().map(a -> a.values()).flatMap(Collection::stream)
+                .map(a -> a.shortValue()).forEach(MsgHelper::addMsgType);
     }
 }
