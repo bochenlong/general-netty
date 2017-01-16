@@ -1,6 +1,7 @@
 package org.bochenlong.general.netty.msg.bean;
 
 import org.bochenlong.general.netty.common.CommonHeaderKey;
+import org.bochenlong.general.netty.idgenerator.IdWorker;
 import org.bochenlong.general.netty.msg.MsgType;
 
 import java.util.HashMap;
@@ -12,7 +13,7 @@ import java.util.Map;
 public class Header {
     private byte crcCode = 0x01;
     private int length;
-    private long requestId;
+    private long requestId = IdWorker.instance().nextId();
     private short type; /** see {@link MsgType}*/
     private byte requestProp;
     private byte priority;
